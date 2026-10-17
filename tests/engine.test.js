@@ -1,0 +1,12 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {Game,TYPES} from '../src/engine.js';
+const advance=(g,seconds)=>{for(let i=0;i<seconds*20;i++)g.tick(.05);};
+const quiet=()=>{const g=new Game();g.ai=()=>{};return g;};
+test('矿车自动采矿并回库增加资金',()=>{const g=quiet();advance(g,50);assert.ok(g.money[0]>1800);assert.ok([...g.ore.values()].some(v=>v<800));});
+test('队列扣款、完成、建筑部署及非法重叠',()=>{const g=quiet();assert.equal(g.enqueue(0,'power'),'');assert.equal(g.money[0],1500);advance(g,9);assert.equal(g.ready[0],'power');assert.equal(g.place(0,3,4),false);assert.equal(g.place(0,0,4),true);assert.equal(g.ready[0],null);assert.equal(g.power(0).out,130);});
+test('生产前置与余额约束不会扣款',()=>{const g=quiet();assert.match(g.enqueue(0,'tank'),/需要/);assert.equal(g.money[0],1800);g.money[0]=0;assert.equal(g.enqueue(0,'power'),'资金不足');});
+test('步兵生产于建筑外，生产设施被毁后暂停',()=>{const g=quiet();const b=g.add('barracks',0,0,7);g.add('power',0,0,3);g.enqueue(0,'soldier');advance(g,5);assert.equal(g.alive(0,'soldier').length,3);const s=g.alive(0,'soldier').at(-1);assert.equal(g.blocked(Math.floor(s.x),Math.floor(s.y)),false);g.enqueue(0,'soldier');b.hp=0;advance(g,5);assert.equal(g.queue[0][0].left,4);});
+test('低电力时以40%速度生产',()=>{const g=quiet();g.add('factory',0,0,10);g.enqueue(0,'power');advance(g,5);assert.ok(Math.abs(g.queue[0][0].left-6)<.01);});
+test('寻路绕开建筑与石块，拒绝地图外目标',()=>{const g=quiet();const path=g.path(2,5,8,5);assert.ok(path.length>6);assert.ok(path.every(p=>!g.blocked(Math.floor(p.x),Math.floor(p.y))));assert.deepEqual(g.path(2,5,-1,4),[]);});
+test('攻击可摧毁基地并锁定胜利',()=>{const g=quiet();g.entities=g.entities.filter(e=>e.type==='hq');const hq=g.alive(1,'hq')[0];hq.hp=40;const tank=g.add('tank',0,31,20);g.attack([tank.id],hq);advance(g,1);assert.equal(g.winner,0);const t=g.time;g.tick(5);assert.equal(g.time,t);});
+test('玩家基地摧毁判负',()=>{const g=quiet();g.alive(0,'hq')[0].hp=0;g.tick(.05);assert.equal(g.winner,1);});
+test('电脑完成建设并能在无人防守时赢得战局',()=>{const g=new Game();g.entities=g.entities.filter(e=>e.team!==0||!TYPES[e.type].damage);advance(g,500);assert.ok(g.alive(1,'barracks').length);assert.ok(g.alive(1,'factory').length);assert.equal(g.winner,1);});
