@@ -56,5 +56,17 @@
   "timer_analysis_status": {
     "state": "stopped_without_stable_results",
     "scope": "Local investigator reports stopping only wrappers owned by this static-analysis run; original game and production were not modified."
+  },
+  "string_address_correction": {
+    "withdrawn_va": "0x5d0965",
+    "reported_corrected_va": "0x5d4865",
+    "reported_reason": "Previous DGROUP raw-offset mapping was incorrect.",
+    "verification_status": "Local handoff only; not independently verified in this cloud workspace.",
+    "source_thread": "01a14da7-c9fa-7923-81a0-9d1b9549d4fe",
+    "limitations": [
+      "Full PE SHA-256 not supplied in this handoff",
+      "String identity, raw file offset and section mapping are not supplied",
+      "Does not establish GameSpeed field or slider semantics"
+    ]
   }
 }
