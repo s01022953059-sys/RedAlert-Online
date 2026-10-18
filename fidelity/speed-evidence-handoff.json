@@ -68,5 +68,11 @@
       "String identity, raw file offset and section mapping are not supplied",
       "Does not establish GameSpeed field or slider semantics"
     ]
+  },
+  "reported_summary_artifact": {
+    "path": "output/speed-calibration-static/evidence-summary.json",
+    "available_in_cloud_workspace": false,
+    "status": "reported by local investigator; contents not read here",
+    "reported_contents": "Five REA Evidence IDs, default-setting native timing samples, and unresolved slider-field status"
   }
 }
