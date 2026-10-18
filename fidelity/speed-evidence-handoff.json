@@ -43,13 +43,18 @@
     "mean_frame_interval_ms": 47.9537,
     "scope": "This sampled Windows compatibility setup at its reported default setting only; not all versions or all slider settings."
   },
-  "correction": "0x655d18 is reported session-mode data, not GameSpeed; do not use it as a function address.",
+  "correction": "0x655d18 is reported session/building-mode data based on building-begin-mode use; analyze_function was invalid there. An invalid function analysis alone does not establish data semantics. Do not treat this address as GameSpeed.",
   "pending": [
     "Obtain full binary SHA-256 and original Evidence artifacts",
     "Recalculate statistics from raw trace",
     "Read rounding and accumulator operation ordering from instructions",
     "Complete speed-slider commit/restart sweep before assigning slider semantics",
-    "Compare implementation traces against independent original execution"
+    "Compare implementation traces against independent original execution",
+    "Locate actual speed-setting field through committed-setting dynamic measurements; do not infer from 0x655d18"
   ],
-  "runtime_changes": false
+  "runtime_changes": false,
+  "timer_analysis_status": {
+    "state": "stopped_without_stable_results",
+    "scope": "Local investigator reports stopping only wrappers owned by this static-analysis run; original game and production were not modified."
+  }
 }
