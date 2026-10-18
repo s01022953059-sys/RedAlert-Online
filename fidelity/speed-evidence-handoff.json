@@ -1,0 +1,55 @@
+{
+  "status": "reported_by_local_analysis_not_reverified_here",
+  "source_thread": "01a14da7-c9fa-7923-81a0-9d1b9549d4fe",
+  "source_workspace": "/Users/baggio/Projects/RedAlert-Online",
+  "artifact_directory": "output/speed-calibration-static",
+  "binary_sha256_prefix": "a95e2ac",
+  "binary_sha256_complete": null,
+  "evidence": {
+    "drive_track": {
+      "address": "0x4c2200",
+      "id": "ev_e5f9025813a98f4655b1b10985ce52ae84fa553813bd75b4afdacc49682124b8",
+      "reported_findings": [
+        "speed accumulator at unit+0x150",
+        "track at +0x154 and index at +0x158",
+        "fixed-point rounding adds 0x80",
+        "strict >10 threshold and subtract-10 loop",
+        "track end resets accumulator to zero"
+      ]
+    },
+    "terrain_speed": {
+      "address": "0x4c312c",
+      "id": "ev_c0c5ee32c133ab1ca2ff5df38cb0ffc5b6d84e18440a501d5d0778149fcd5b2e"
+    },
+    "speed_rule_conversion": {
+      "address": "0x570d90",
+      "id": "ev_da1a38645f4ef0105eb9f77e47f0ac0f2a33b277d534df3dec3537b5ec1ee43a"
+    },
+    "building_radio": "ev_cf56b6ec5a41a170037db322a375602cf2dd271689b8985112d429eee3f2753d",
+    "unit_radio": "ev_21401576d1e866b9cbe00992f40843cfedae45e38eb5794e3d9c5902d665f748",
+    "frame_global_xrefs": {
+      "address": "0x6544c8",
+      "id": "ev_44df35137ca600abf58190d42bb44d1b44820fb2b750e330219dd06b9ba30b7f"
+    }
+  },
+  "reported_native_measurement": {
+    "directory": "output/speed-calibration-static/native-speed-default",
+    "samples": 313,
+    "frame_start": 733,
+    "frame_end": 1045,
+    "elapsed_seconds": 14.96156,
+    "derived_frames_per_second": 20.853440416641046,
+    "median_frame_interval_ms": 48.0415,
+    "mean_frame_interval_ms": 47.9537,
+    "scope": "This sampled Windows compatibility setup at its reported default setting only; not all versions or all slider settings."
+  },
+  "correction": "0x655d18 is reported session-mode data, not GameSpeed; do not use it as a function address.",
+  "pending": [
+    "Obtain full binary SHA-256 and original Evidence artifacts",
+    "Recalculate statistics from raw trace",
+    "Read rounding and accumulator operation ordering from instructions",
+    "Complete speed-slider commit/restart sweep before assigning slider semantics",
+    "Compare implementation traces against independent original execution"
+  ],
+  "runtime_changes": false
+}
